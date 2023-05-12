@@ -25,7 +25,7 @@ public class UsuarioImpl extends es.mdef.dam.support.Usuario{
 	private String contrasenia;
 	
 	// Relacion OneToMany Usuario-Recursos
-	@OneToMany(mappedBy = "usuarioImpl")
+	@OneToMany(mappedBy = "usuario")
 	private List<Recurso> recursos;
 
 	public Long getId() {
