@@ -16,6 +16,7 @@ import es.mdef.dam.assemblers.RecursoAssembler;
 import es.mdef.dam.entidades.Recurso;
 import es.mdef.dam.models.RecursoModel;
 import es.mdef.dam.repositorios.RecursoRepositorio;
+import jakarta.validation.Valid;
 import es.mdef.dam.REST.RegisterNotFoundException;
 
 @RestController
@@ -51,14 +52,14 @@ public class RecursoController {
 	}
 	
 	@PostMapping
-	public RecursoModel add(@RequestBody RecursoModel model) {
+	public RecursoModel add(@Valid @RequestBody RecursoModel model) {
 		Recurso recurso = repositorio.save(assembler.toEntity(model));
 		log.info("Añadido " + recurso);
 		return assembler.toModel(recurso);
 	}
 	
 	@PutMapping("{id}")
-	public RecursoModel edit(@PathVariable Long id, @RequestBody RecursoModel model){
+	public RecursoModel edit(@Valid @PathVariable Long id, @RequestBody RecursoModel model){
 		Recurso recurso = repositorio.findById(id).map(rec -> {
 			rec.setFichero(model.getFichero());
 			rec.setDuracion(model.getDuracion());

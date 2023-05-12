@@ -3,10 +3,14 @@ package es.mdef.dam.entidades;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="RECURSOS")
@@ -30,11 +34,18 @@ public class Recurso {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonIgnore
 	private Long id;
+	
+	@NotBlank(message="El nombre del fichero no puede estar vacio")
 	private String fichero;
 	private int tamano;
 	private Resolucion resolucion;
 	private int duracion;
 	private TipoRecursos tipo;
+	
+	// RELACION MANY TO ONE CON USUARIO
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "usuarioId", nullable = false)
+	private UsuarioImpl usuario;
 	
 	public String getFichero() {
 		return fichero;
@@ -72,6 +83,13 @@ public class Recurso {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public UsuarioImpl getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(UsuarioImpl usuario) {
+		this.usuario = usuario;
+	}
+	
 	
 	
 	
